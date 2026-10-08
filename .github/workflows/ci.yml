@@ -3,10 +3,11 @@ name: CI
 on:
   pull_request:
   push:
-    branches: [main]
+    branches: [master]
 
 permissions:
   contents: read
+  packages: read
 
 jobs:
   test:
@@ -21,7 +22,11 @@ jobs:
         with:
           distribution: temurin
           java-version: '17'
-          cache: maven
+          server-id: github
+          server-username: GITHUB_ACTOR
+          server-password: GITHUB_TOKEN
 
       - name: Run tests
-        run: mvn --batch-mode verify
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: mvn --batch-mode -U verify

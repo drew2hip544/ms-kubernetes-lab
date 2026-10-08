@@ -21,7 +21,8 @@ class HelloControllerTest {
     void returnsGreeting() throws Exception {
         mockMvc.perform(get("/hello"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.message").value("Hello from the Java microservice!"));
+            .andExpect(jsonPath("$.message")
+                .value("Hello from Kubernetes - PAYMENT_PROVIDER=LEGIT"));
     }
 
     @Test

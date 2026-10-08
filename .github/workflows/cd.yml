@@ -12,9 +12,9 @@ jobs:
   deploy:
     if: >-
       github.event.workflow_run.event == 'push' &&
-      github.event.workflow_run.head_branch == 'main' &&
+      github.event.workflow_run.head_branch == 'master' &&
       github.event.workflow_run.conclusion == 'success'
-    runs-on: ubuntu-latest
+    runs-on: demo
     permissions:
       contents: read
       packages: write
@@ -30,10 +30,14 @@ jobs:
         with:
           distribution: temurin
           java-version: '17'
-          cache: maven
+          server-id: github
+          server-username: GITHUB_ACTOR
+          server-password: GITHUB_TOKEN
 
       - name: Build application
-        run: mvn --batch-mode -DskipTests package
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: mvn --batch-mode -U -DskipTests package
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
