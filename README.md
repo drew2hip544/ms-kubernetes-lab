@@ -15,7 +15,7 @@ mvn spring-boot:run
 - `GET http://localhost:8080/health` devuelve el estado del servicio.
 - `mvn test` ejecuta las pruebas.
 
-`test-dependency` publica el artefacto `com.ekoparty.demo:payment-utils:1.0` en `https://maven.pkg.github.com/drew2hip544/test-dependency`. La política `updatePolicy=always`, junto con `-U` y la ausencia de caché Maven en los workflows, permite que esta demo detecte que cambió un artefacto publicado con las mismas coordenadas.
+`test-dependency` publica `com.ekoparty.demo:payment-utils:1.0-SNAPSHOT` en `https://maven.pkg.github.com/drew2hip544/test-dependency`. Cada `mvn deploy` publica un nuevo snapshot bajo esa misma coordenada. El consumidor consulta metadata actualizada (`updatePolicy=always` y `-U`) para resolver el snapshot más reciente; los workflows no cachean el repositorio Maven.
 
 Para ejecutar Maven localmente, configura `%USERPROFILE%\.m2\settings.xml` con un personal access token clásico que tenga permiso `read:packages` y un servidor cuyo `id` sea `github`. No guardes ese token en el repositorio:
 
