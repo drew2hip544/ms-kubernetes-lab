@@ -3,9 +3,9 @@ kind: Service
 metadata:
   name: java-microservice
 spec:
-  type: ClusterIP
+  type: LoadBalancer
   selector:
     app: java-microservice
   ports:
-    - port: 80
+    - port: 8080
       targetPort: 8080
