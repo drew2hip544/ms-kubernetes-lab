@@ -16,8 +16,6 @@ jobs:
     steps:
       - name: Checkout tested commit
         uses: actions/checkout@v4
-        with:
-          ref: ${{ github.event.workflow_run.head_sha }}
 
       - name: Set up Java
         uses: actions/setup-java@v4
@@ -48,7 +46,7 @@ jobs:
         uses: docker/metadata-action@v5
         with:
           images: ghcr.io/${{ github.repository }}
-          tags: type=raw,value=${{ github.event.workflow_run.head_sha }}
+          tags: type=raw,value=${{ github.sha }}
 
       - name: Build and publish image
         uses: docker/build-push-action@v6
