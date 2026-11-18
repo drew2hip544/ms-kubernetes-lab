@@ -1,0 +1,30 @@
+name: Generador de versiones
+
+env:
+  APP_NAME: meditrack-api
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Versión a generar'
+        required: true
+        default: '1.0'
+
+jobs:
+  generate-version:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Generar versión
+        id: generate_version
+        run: |
+          VERSION="${{ github.event.inputs.version }}.${{ github.run_number }}"
+          echo "VERSION=$VERSION" >> $GITHUB_OUTPUT
+
+      - name: Mostrar nombre de la aplicación y versión
+        run: |
+          echo "Application: ${{ env.APP_NAME }}"
+          echo "Version: ${{ steps.generate_version.outputs.VERSION }}"
+          echo "Repository: ${{ github.repository }}"
+
